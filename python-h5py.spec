@@ -16,7 +16,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	python >= 2.5, python-numpy >= 1.0.3
 BuildRequires:	python-devel >= 2.5, python-numpy-devel >= 1.0.3, hdf5 >= 1.8.0
 BuildRequires:	hdf5-devel >= 1.8.0
-BuildRequires:	python-sphinx
+BuildRequires:	python-setuptools, python-sphinx
 
 %description
 HDF5 for Python (h5py) is a general-purpose Python interface to the
