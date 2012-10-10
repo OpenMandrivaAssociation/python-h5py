@@ -1,7 +1,12 @@
 %define module	h5py
 %define name	python-%{module}
-%define version 2.0.1
-%define release %mkrel 1
+%define version 2.1.0
+%define	rel		1
+%if %mdkversion < 201100
+%define release %mkrel %{rel}
+%else
+%define release %{rel}
+%endif
 
 Summary:	A Python interface to the HDF5 library
 Name: 		%{name}
