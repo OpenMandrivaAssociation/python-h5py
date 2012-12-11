@@ -1,28 +1,24 @@
 %define module	h5py
-%define name	python-%{module}
-%define version 2.1.0
-%define	rel		1
-%if %mdkversion < 201100
-%define release %mkrel %{rel}
-%else
-%define release %{rel}
-%endif
 
 Summary:	A Python interface to the HDF5 library
-Name: 		%{name}
-Version:	%{version}
-Release:	%{release}
+Name: 		python-%{module}
+Version:	2.0.1
+Release:	2
 Source0:	%{module}-%{version}.tar.gz
 Source1:	docs.tar.gz
 License:	BSD
 Group:		Development/Python
 Url:		http://h5py.alfven.org/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Requires:	python >= 2.6, python-numpy >= 1.0.3
-BuildRequires:	python-devel >= 2.6, python-numpy-devel >= 1.0.3, hdf5 >= 1.8.3
+Requires:	python >= 2.6
+Requires:   python-numpy >= 1.0.3
+BuildRequires:	python-devel >= 2.6
+BuildRequires:	python-numpy-devel >= 1.0.3
+BuildRequires:	hdf5 >= 1.8.3
 BuildRequires:	hdf5-devel >= 1.8.3
 BuildRequires:	python-cython >= 0.13
-BuildRequires:	python-setuptools, python-sphinx
+BuildRequires:	python-setuptools
+BuildRequires:	python-sphinx
+BuildRequires:	pkgconfig(lapack)
 
 %description
 HDF5 for Python (h5py) is a general-purpose Python interface to the
@@ -49,7 +45,6 @@ tar zxf %SOURCE1
 PYTHONDONTWRITEBYTECODE= %__python setup.py build
 
 %install
-%__rm -rf %{buildroot}
 PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} --record=FILE_LIST
 pushd docs
 export PYTHONPATH=`dir -d ../build/lib.linux*`
@@ -59,10 +54,22 @@ popd
 chmod 644 %{buildroot}%{py_platsitedir}/h5py*egg-info*
 chmod 644 ANN.txt README.txt
 
-%clean
-%__rm -rf %{buildroot}
 
 %files -f FILE_LIST
-%defattr(-,root,root)
 %doc ANN.txt README.txt examples/ docs/build/html/
+
+
+
+%changelog
+* Tue Dec 13 2011 Lev Givon <lev@mandriva.org> 2.0.1-1mdv2011.0
++ Revision: 740769
+- Update to 2.0.1.
+
+* Mon Jun 20 2011 Lev Givon <lev@mandriva.org> 2.0.0-1
++ Revision: 686248
+- Update to 2.0.0.
+
+* Mon Feb 21 2011 Lev Givon <lev@mandriva.org> 1.3.1-1
++ Revision: 639225
+- import python-h5py
 
