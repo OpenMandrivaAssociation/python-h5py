@@ -3,7 +3,7 @@
 Summary:	A Python interface to the HDF5 library
 Name: 		python-%{module}
 Version:	2.1.0
-Release:	2
+Release:	3
 Source0:	%{module}-%{version}.tar.gz
 Source1:	docs.tar.gz
 License:	BSD
