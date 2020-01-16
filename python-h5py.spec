@@ -2,15 +2,16 @@
 
 Summary:	A Python interface to the HDF5 library
 Name: 		python-%{module}
-Version:	2.1.0
-Release:	3
+Version:	2.10.0
+Release:	1
 Source0:	%{module}-%{version}.tar.gz
 Source1:	docs.tar.gz
+Patch0:		docs-py3-fix.patch
 License:	BSD
 Group:		Development/Python
 Url:		http://h5py.alfven.org/
 Requires:	python >= 2.6
-Requires:   python-numpy >= 1.0.3
+Requires:   	python-numpy >= 1.0.3
 BuildRequires:	python-devel >= 2.6
 BuildRequires:	python-numpy-devel >= 1.0.3
 BuildRequires:	hdf5 >= 1.8.3
@@ -18,6 +19,7 @@ BuildRequires:	hdf5-devel >= 1.8.3
 BuildRequires:	python-cython >= 0.13
 BuildRequires:	python-setuptools
 BuildRequires:	python-sphinx
+BuildRequires:	python-numpy
 BuildRequires:	pkgconfig(lapack)
 
 %description
@@ -40,6 +42,7 @@ arbitrary NumPy data and metadata.
 %prep
 %setup -q -n %{module}-%{version}
 tar zxf %SOURCE1
+%autopatch -p1
 
 %build
 PYTHONDONTWRITEBYTECODE= %__python setup.py build
@@ -51,25 +54,9 @@ export PYTHONPATH=`dir -d ../build/lib.linux*`
 make html
 rm -rf build/html/.buildinfo build/html/.doctrees 
 popd
-chmod 644 %{buildroot}%{py_platsitedir}/h5py*egg-info*
-chmod 644 ANN.txt README.txt
-
-
-%files -f FILE_LIST
-%doc ANN.txt README.txt examples/ docs/build/html/
+#chmod 644 %{buildroot}%{py_platsitedir}/h5py*egg-info*
 
 
 
-%changelog
-* Tue Dec 13 2011 Lev Givon <lev@mandriva.org> 2.0.1-1mdv2011.0
-+ Revision: 740769
-- Update to 2.0.1.
-
-* Mon Jun 20 2011 Lev Givon <lev@mandriva.org> 2.0.0-1
-+ Revision: 686248
-- Update to 2.0.0.
-
-* Mon Feb 21 2011 Lev Givon <lev@mandriva.org> 1.3.1-1
-+ Revision: 639225
-- import python-h5py
-
+%files  -f FILE_LIST
+%doc examples/ docs/build/html/
