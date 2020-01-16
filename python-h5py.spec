@@ -45,10 +45,10 @@ tar zxf %SOURCE1
 %autopatch -p1
 
 %build
-PYTHONDONTWRITEBYTECODE= %__python setup.py build
+%__python setup.py build
 
 %install
-PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} --record=FILE_LIST
+%__python setup.py install --root=%{buildroot} --record=FILE_LIST
 pushd docs
 export PYTHONPATH=`dir -d ../build/lib.linux*`
 make html
@@ -60,3 +60,6 @@ popd
 
 %files  -f FILE_LIST
 %doc examples/ docs/build/html/
+%{python_sitearch}/h5py/__pycache__
+%{python_sitearch}/h5py/*/__pycache__
+%{python_sitearch}/h5py/*/*/__pycache__
