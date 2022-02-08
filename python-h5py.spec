@@ -2,25 +2,21 @@
 
 Summary:	A Python interface to the HDF5 library
 Name: 		python-%{module}
-Version:	2.10.0
+Version:	3.6.0
 Release:	1
-Source0:	%{module}-%{version}.tar.gz
-Source1:	docs.tar.gz
-Patch0:		docs-py3-fix.patch
+Source0:	https://github.com/h5py/h5py/archive/refs/tags/%{version}/%{name}-%{version}.tar.gz
 License:	BSD
 Group:		Development/Python
-Url:		http://h5py.alfven.org/
-Requires:	python >= 2.6
-Requires:   	python-numpy >= 1.0.3
-BuildRequires:	python-devel >= 2.6
-BuildRequires:	python-numpy-devel >= 1.0.3
-BuildRequires:	hdf5 >= 1.8.3
-BuildRequires:	hdf5-devel >= 1.8.3
-BuildRequires:	python-cython >= 0.13
-BuildRequires:	python-setuptools
-BuildRequires:	python-sphinx
-BuildRequires:	python-numpy
-BuildRequires:	pkgconfig(lapack)
+Url:		https://www.h5py.org/
+
+BuildRequires:	hdf5-devel
+BuildRequires:	pkgconfig(python3)
+BuildRequires:  python3dist(cython)
+BuildRequires:  python3dist(numpy)
+BuildRequires:  python3dist(pkgconfig)
+BuildRequires:  python3dist(pytools)
+BuildRequires:  python3dist(setuptools)
+BuildRequires:  python3dist(sphinx)
 
 %description
 HDF5 for Python (h5py) is a general-purpose Python interface to the
@@ -39,27 +35,23 @@ In addition to providing interoperability with existing HDF5 datasets
 and platforms, h5py is a convenient way to store and retrieve
 arbitrary NumPy data and metadata.
 
+%files
+%doc licenses/*.txt README.rst
+%doc docs/_build/html
+%{python3_sitearch}/%{module}/
+%{python3_sitearch}/%{module}-%{version}-py?.?.egg-info
+
+#---------------------------------------------------------------------------
+
 %prep
-%setup -q -n %{module}-%{version}
-tar zxf %SOURCE1
-%autopatch -p1
+%autosetup -n %{module}-%{version}
 
 %build
-%__python setup.py build
+%py3_build
+
+# docs
+make -C docs html SPHINXOPTS=
+rm -rf docs/_build/html/.buildinfo
 
 %install
-%__python setup.py install --root=%{buildroot} --record=FILE_LIST
-pushd docs
-export PYTHONPATH=`dir -d ../build/lib.linux*`
-make html
-rm -rf build/html/.buildinfo build/html/.doctrees 
-popd
-#chmod 644 %{buildroot}%{py_platsitedir}/h5py*egg-info*
-
-
-
-%files  -f FILE_LIST
-%doc examples/ docs/build/html/
-%{python_sitearch}/h5py/__pycache__
-%{python_sitearch}/h5py/*/__pycache__
-%{python_sitearch}/h5py/*/*/__pycache__
+%py3_install
