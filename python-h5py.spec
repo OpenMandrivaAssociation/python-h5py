@@ -2,7 +2,7 @@
 
 Summary:	A Python interface to the HDF5 library
 Name: 		python-%{module}
-Version:	3.6.0
+Version:	3.7.0
 Release:	1
 Source0:	https://github.com/h5py/h5py/archive/refs/tags/%{version}/%{name}-%{version}.tar.gz
 License:	BSD
@@ -15,7 +15,9 @@ BuildRequires:  python3dist(cython)
 BuildRequires:  python3dist(numpy)
 BuildRequires:  python3dist(pkgconfig)
 BuildRequires:  python3dist(pytools)
-BuildRequires:  python3dist(setuptools)
+BuildRequires:	python3dist(pip)
+BuildRequires:	python3dist(setuptools)
+BuildRequires:	python3dist(wheel)
 BuildRequires:  python3dist(sphinx)
 
 %description
@@ -38,8 +40,8 @@ arbitrary NumPy data and metadata.
 %files
 %doc licenses/*.txt README.rst
 %doc docs/_build/html
-%{python3_sitearch}/%{module}/
-%{python3_sitearch}/%{module}-%{version}-py?.?.egg-info
+%{py_platsitedir}/%{module}/
+%{py_platsitedir}/%{module}-%{version}.dist-info/
 
 #---------------------------------------------------------------------------
 
@@ -47,11 +49,11 @@ arbitrary NumPy data and metadata.
 %autosetup -n %{module}-%{version}
 
 %build
-%py3_build
+%py_build
 
 # docs
 make -C docs html SPHINXOPTS=
 rm -rf docs/_build/html/.buildinfo
 
 %install
-%py3_install
+%py_install
