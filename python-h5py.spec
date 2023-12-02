@@ -11,14 +11,14 @@ Url:		https://www.h5py.org/
 
 BuildRequires:	hdf5-devel
 BuildRequires:	pkgconfig(python3)
-BuildRequires:  python3dist(cython)
-BuildRequires:  python3dist(numpy)
-BuildRequires:  python3dist(pkgconfig)
-BuildRequires:  python3dist(pytools)
-BuildRequires:	python3dist(pip)
-BuildRequires:	python3dist(setuptools)
-BuildRequires:	python3dist(wheel)
-BuildRequires:  python3dist(sphinx)
+BuildRequires:	python%{pyver}dist(cython) < 1.0
+BuildRequires:	python%{pyver}dist(numpy)
+BuildRequires:	python%{pyver}dist(pkgconfig)
+BuildRequires:	python%{pyver}dist(pytools)
+BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
+BuildRequires:	python%{pyver}dist(wheel)
+BuildRequires:	python%{pyver}dist(sphinx)
 
 %description
 HDF5 for Python (h5py) is a general-purpose Python interface to the
