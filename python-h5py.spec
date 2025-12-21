@@ -9,6 +9,7 @@ License:	BSD
 Group:		Development/Python
 Url:		https://www.h5py.org/
 
+BuildRequires:	make
 BuildRequires:	hdf5-devel
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	python%{pyver}dist(cython) < 1.0
