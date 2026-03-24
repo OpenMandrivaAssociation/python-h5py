@@ -1,25 +1,29 @@
-%define module	h5py
+%define module h5py
 
+Name: 		python-h5py
 Summary:	A Python interface to the HDF5 library
-Name: 		python-%{module}
-Version:	3.12.1
-Release:	3
-Source0:	https://github.com/h5py/h5py/archive/refs/tags/%{version}/%{name}-%{version}.tar.gz
-License:	BSD
+Version:	3.16.0
+Release:	1
+License:	BSD-3-Clause
 Group:		Development/Python
-Url:		https://www.h5py.org/
+URL:		https://github.com/h5py/h5py
+Source0:	%{URL}/archive/%{version}/%{name}-%{version}.tar.gz
 
+BuildSystem:	python
 BuildRequires:	make
 BuildRequires:	hdf5-devel
 BuildRequires:	pkgconfig(python3)
-BuildRequires:	python%{pyver}dist(cython) < 1.0
+BuildRequires:	python%{pyver}dist(cython)
 BuildRequires:	python%{pyver}dist(numpy)
+BuildRequires:	python%{pyver}dist(packaging)
 BuildRequires:	python%{pyver}dist(pkgconfig)
-BuildRequires:	python%{pyver}dist(pytools)
 BuildRequires:	python%{pyver}dist(pip)
 BuildRequires:	python%{pyver}dist(setuptools)
 BuildRequires:	python%{pyver}dist(wheel)
+# For docs
 BuildRequires:	python%{pyver}dist(sphinx)
+BuildRequires:	python%{pyver}dist(sphinx-rtd-theme)
+
 
 %description
 HDF5 for Python (h5py) is a general-purpose Python interface to the
@@ -38,23 +42,16 @@ In addition to providing interoperability with existing HDF5 datasets
 and platforms, h5py is a convenient way to store and retrieve
 arbitrary NumPy data and metadata.
 
-%files
-%doc licenses/*.txt README.rst
-%doc docs/_build/html
-%{py_platsitedir}/%{module}/
-%{py_platsitedir}/%{module}-%{version}.dist-info/
+%build -p
+export LDFLAGS="%{ldflags} -lpython%{pyver}"
 
-#---------------------------------------------------------------------------
-
-%prep
-%autosetup -n %{module}-%{version}
-
-%build
-%py_build
-
+%build -a
 # docs
 make -C docs html SPHINXOPTS=
 rm -rf docs/_build/html/.buildinfo
 
-%install
-%py_install
+%files
+%doc licenses/*.txt README.rst
+%doc docs/_build/html
+%{py_platsitedir}/%{module}
+%{py_platsitedir}/%{module}-%{version}.dist-info
