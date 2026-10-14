@@ -3,7 +3,7 @@
 Name: 		python-h5py
 Summary:	A Python interface to the HDF5 library
 Version:	3.16.0
-Release:	1
+Release:	2
 License:	BSD-3-Clause
 Group:		Development/Python
 URL:		https://github.com/h5py/h5py
